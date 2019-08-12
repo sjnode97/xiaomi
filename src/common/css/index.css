@@ -1,0 +1,65 @@
+html{
+    font-family: 'Helvetica Neue',Tahoma,Arial,PingFangSC-Regular,'Hiragino Sans GB','Microsoft Yahei',sans-serif;
+    -webkit-font-smoothing: antialiased;  /*chrome、safari  抗锯齿渲染可以使字体看起来会更清晰舒服*/
+    -moz-osx-font-smoothing: grayscale;/*firefox*/
+    -webkit-text-size-adjust: 100%; /* 解决默认会放大文字的问题 */
+    text-size-adjust: none;
+    color: #333;
+    -webkit-user-select: none;
+    user-select: none;
+    font-size: 13.3333vw;
+    /*
+        rem  是根据html的文字大小font-size 来计算的
+
+
+        设计图  750px
+            把设计图分成  7.5等份 每一等份是100px
+            把100px 作为一个换算单位
+            设计图上是真实物理像素是 376px 写css大小是 3.76rem
+
+
+        100% 设备宽
+        50%  设备的宽 1/2
+        100vw  view width  屏幕宽
+        50vw  屏幕宽 1/2
+
+        100vw
+            屏幕的大小也要分成 7.5等份
+            每一等份 =  100vw / 7.5 = 13.3333vw
+    */
+}
+*{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+    display: block;
+}
+img{
+    vertical-align: top;
+}
+li{
+    list-style: none;
+}
+.App{
+    height:1500px;
+}
+.active{
+    color: #ff6700 !important;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.clearFix::after{
+    content: '';
+    display: block;
+    clear: both;
+    zoom: 1;
+}
