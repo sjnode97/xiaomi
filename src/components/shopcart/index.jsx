@@ -1,199 +1,185 @@
 import React, {Component} from 'react';
 import "./css/index.scss";
-/*
-import {addCart,delCart,getGoodsNum} from "../../actions/cart";
-import {connect} from "react-redux";
-*/
 
-/*@connect(
+
+import {addCart,delCart,getGoodsNum} from "../../actions/run";
+
+
+import {connect} from "react-redux";
+
+
+@connect(
     state=>({shop:state}),
     {addCart,delCart,getGoodsNum}
-)*/
+)
 class Index extends Component {
-   /* constructor(props) {
+   constructor(props) {
         super(props);
 
         this.state = {
             adr: '湖南长沙',
             goods:[],
-            count:0,
-            price:0,
+            zongshu:0,
+            jiage:0,
             map: ''
         }
     }
-    // 删除商品
-    delGoods = (index)=>{
-        let goods = this.state.goods
-        let {delCart} = this.props
-        delCart(goods[index]['shopid'])
-        goods.splice(index,1)
-        this.setState({goods})
+    getData =()=>{
+       let {cartCount} = this.props.shop
+       let {goods} = this.state
+       let shopid = Object.keys(cartCount)
+        shopid.forEach((item,index)=>{
 
-        this.totalPrice()
+            fetch('http://47.100.98.54:9020/api/buygoods/'+item)
+                .then((r)=>r.json())
+                .then((res)=>{
+                    // 挂载此商品对应的数量
+                    res['num'] = cartCount[item]
+                    goods.push(res)
+                    this.setState({
+                        goods
+                    })
+                    this.getResoult()
+                })
+        })
     }
-
-    // 减少
-    reduceGoods = (index)=>{
-        // console.log(index)
+    reduceGoods =(index)=>{
+        console.log(this.state)
         let goods = this.state.goods
         let {addCart} = this.props
         let id = goods[index].shopid
-        if( goods[index].num ){
+        if(goods[index].num){
             goods[index].num--
             this.setState({goods})
-            addCart({
-                id,
-                num:-1
-            })
         }
-        this.totalPrice()
+        addCart({
+            id,
+            num:-1
+        })
+        this.zongjia()
     }
-    // 增加
-    addGoods = (index)=>{
-        //console.log(index)
+    addGoods = (index) =>{
+
         let goods = this.state.goods
+
         let {addCart} = this.props
         let id = goods[index].shopid
-        goods[index].num ++
+        //let num = goods[index].num
+        goods[index].num++
 
         this.setState({goods})
-
         addCart({
             id,
             num:1
         })
-        this.totalPrice()
+        this.zongjia()
     }
-    getData = ()=>{
-        let {cartCount} = this.props.shop  //{11: 1, 12: 2, 21: 7,data:5,map:''}
-        let {goods} = this.state
-        let shopid = Object.keys(cartCount)  // [11,12,21,data,abc]
-        shopid.forEach((item,index)=>{
-            if( !isNaN(item) ){ // 必须判断是数字（商品id）
-                fetch('http://47.100.98.54:9020/api/buygoods/'+item)
-                    .then((r)=>r.json())
-                    .then((res)=>{
-                        // 挂载此商品对应的数量
-                        res['num'] = cartCount[item]
-                        goods.push(res)
-                        this.setState({
-                            goods
-                        })
-                    })
-            }
+    delGoods =(index)=>{
 
-
-        })
-        //console.log(cartCount)
-        this.getResoult()
+        let goods = this.state.goods
+        let {delCart} = this.props
+        delCart(goods[index]["shopid"])
+        goods.splice(index,1)
+        this.setState({goods})
+        this.zongjia()
     }
-    getResoult = ()=>{
-        let {cartCount} = this.props.shop
-        let timer = setTimeout(()=>{
-            clearTimeout(timer)
-            this.totalPrice()
-
-        },200)
-        if( cartCount.map ){
+    getResoult = () =>{
+       let {cartCount} = this.props.shop
+       let timer = setTimeout(()=>{
+           clearTimeout(timer)
+           this.zongjia()
+       },200)
+        if(cartCount.map){
             this.setState({
-                map: cartCount.map
+                map:cartCount.map
+            })
+        }else {
+            this.setState({
+                map:"请输入地址"
             })
         }
-
     }
-
-    componentDidUpdate() {
-        // this.totalPrice()
-    }
-
-    totalPrice = ()=>{
+    zongjia = () =>{
         let goods = this.state.goods
         let {getGoodsNum} = this.props
-        let count = 0
-        let price = 0
-
-        for (let key of goods){
-            //console.log(key)
-            price += key.num * key.price
-            count += key.num
+        let zongshu = 0
+        let jiage = 0
+        for (let key of goods) {
+            jiage += key.num*key.price
+            zongshu += key.num
         }
-
         this.setState({
-            count,
-            price
+            zongshu,
+            jiage
         })
-
-        getGoodsNum({data:count})
-
+        getGoodsNum({data:zongshu})
     }
     componentDidMount() {
         this.getData()
+
     }
-*/
+
     render() {
-        // let {adr,goods,price,count,map} = this.state
+         let {goods,jiage,zongshu,adr} = this.state
         // console.log( this.props )
         return (
             <div className={'shopcart'}>
 
                 <div className="shopArea mb">
                     <p className="location clearFix">
-                        <span className="fl">送到地点:</span>
+                        <span className="fl">送到地点:{adr&&adr}</span>
                         <span className="fr">编辑地址</span>
                     </p>
                     {
-                       /* goods.length>0 && (
-                            goods.map((item,index)=>{
+                        goods.length>0&&(
+                            goods.map((data,index)=>{
                                 return (
                                     <div key={index} className="shop ">
                                         <div className="shopShow">
                                             <div className="pic ">
-                                                <img src={item.picurl}  alt={item.title}/>
-                                                <img src={item.picurl}  alt={item.title}/>
-                                                <img src={item.picurl}  alt={item.title}/>
+                                                <img src={data.picurl}  alt={data.title}/>
+                                                <img src={data.picurl}  alt={data.title}/>
+                                                <img src={data.picurl}  alt={data.title}/>
                                             </div>
 
                                         </div>
-                                        <div className="title ">{item.title}</div>
-                                        <div className="des ">{item.des}</div>
+                                        <div className="title ">{data.title}</div>
+                                        <div className="des ">{data.des}</div>
                                         <div className="buyNum ">
-                                            <p className=" buyfont">{item.symbol} {item.price}</p>
+                                            <p className=" buyfont">{data.symbol} {data.price}</p>
                                             <p className="addNum ">
-                                                <a
-                                                    href="javascript:;"
+                                                <span
                                                     className="reduce"
                                                     onClick={this.reduceGoods.bind(this,index)}
-                                                >-</a>
-                                                <a href="javascript:;" className="num">{item.num}</a>
-                                                <a
-                                                    href="javascript:;"
+                                                >-</span>
+                                                <span  className="num">{data.num}</span>
+                                                <span
                                                     className="add"
                                                     onClick={this.addGoods.bind(this,index)}
-                                                >+</a>
+                                                >+</span>
                                             </p>
-                                            <a
-                                                href="javascript:;"
+                                            <span
                                                 className="del"
                                                 onClick={this.delGoods.bind(this,index)}
-                                            >删除</a>
+                                            >删除</span>
                                         </div>
                                     </div>
                                 )
                             })
-                        )*/
+                        )
                     }
                     <div className="totalPrice">
 
                         <div className="total">
                             <p className="totalMoney">
-                                <span className="font">总计:</span> <span>￥ 666</span>
+                                <span className="font">总计:</span> <span>￥ {jiage}</span>
                             </p>
                             <p className="preferential">
                                 总金额￥ 优惠￥0.00
                             </p>
                         </div>
                         <div className="goPayment">
-                            <span className="font">去结算</span><span className="num">(件)</span>
+                            <span className="font">去结算</span><span className="num">({zongshu}件)</span>
                         </div>
                     </div>
                 </div>

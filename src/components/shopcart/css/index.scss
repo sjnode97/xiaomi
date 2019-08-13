@@ -62,7 +62,7 @@
       }
       .addNum{
         font-size: 0.40rem;
-        a{
+        span{
           width: 0.60rem;
           height: 0.60rem;
           background: #f1f1f1;
@@ -71,7 +71,7 @@
           text-align: center;
           margin: 0 0.04rem;
         }
-        a:active{
+        span:active{
           background: #ddd;
         }
       }

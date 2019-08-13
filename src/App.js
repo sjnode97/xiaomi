@@ -11,6 +11,7 @@ import My from "./components/my/index"
 import Map from "./components/map/index"
 import Shopcart from "./components/shopcart/index"
 import Shopbuy from "./components/shop/index"
+import Nan from "./components/nan/index"
 
 class App extends Component {
   render(){
@@ -23,6 +24,7 @@ class App extends Component {
                             <Route path={"/my"} component={My}></Route>
                             <Route path={"/shopcart"} component={Shopcart}></Route>
                             <Route path={'/shopbuy/:shopid'} component={Shopbuy}></Route>
+                            <Route component={Nan}></Route>
 
                         </Switch>
                       <Tabbar/>

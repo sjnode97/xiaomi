@@ -5,7 +5,7 @@ import Category from "../category/index"
 import Recommend from "../recommend/index"
 import Conference from "../conference/index"
 import Goods from "../goods/index"
-
+import LazyLoad from 'react-lazyload';
 class Index extends Component {
     render() {
         return (
@@ -15,8 +15,9 @@ class Index extends Component {
                 <Category/>
                 <Recommend/>
                 <Conference/>
+                <LazyLoad>
                 <Goods/>
-
+                </LazyLoad>
             </div>
         )
     }
