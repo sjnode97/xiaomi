@@ -1,19 +1,19 @@
 import React, {Component} from 'react';
-//import {connect} from "react-redux";
+import {connect} from "react-redux";
 import {
     NavLink
 } from "react-router-dom";
 import "./css/index.scss";
-// import {getGoodsNum} from "../../actions/cart";
 
-/*@connect(
-    state=>({shop:state}),
+
+@connect(
+    state=>({gg:state}),
     {}
-)*/
+)
 class Index extends Component {
     render() {
-        //let num = this.props.shop.cartCount.data || false
-        //console.log( num )
+        let num = this.props.gg.cartCount.data || false
+
         return (
             <div className={'tabbar'}>
                 <ul>
@@ -32,7 +32,7 @@ class Index extends Component {
                     <li>
                         <NavLink to="/shopcart">
                             <i className={'iconfont icon-gouwuche1'}>
-                                <em>11</em>
+                                <em>{num}</em>
                             </i>
                             <span>购物车</span>
                         </NavLink>

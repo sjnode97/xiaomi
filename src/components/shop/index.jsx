@@ -1,23 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-
-
 import {Link} from "react-router-dom";
-import {addCart} from "../actives/index";
-
-/*import LazyLoad,{ lazyload } from 'react-lazyload';*/
+import {addCart} from "../../actions/run";
+import LazyLoad,{ lazyload } from 'react-lazyload';
 import "./css/index.scss";
-// import Shopcart from "../shopcart";
+
 
 @connect(
     state=>({shop:state}),
     {addCart}
 )
-/*@lazyload({
+@lazyload({
         height: 200,
         once: true,
         offset: 100
-    })*/
+    })
 class Index extends Component {
     state = {
         data: {},
@@ -38,20 +35,20 @@ class Index extends Component {
                     id
                 })
             })
+        //console.log(this.props.addCart(22))
 
     }
+
     submitRedux = (e)=>{
+
         e.preventDefault()
         let {num,id} = this.state
         let {addCart} = this.props
-        console.log(1);
+
         num && (
-            // console.log('提交到redux里')
-            addCart({
-                id,
-                num
-            })
-    )
+            //console.log('提交到redux里')
+            addCart({id,num})
+         )
     }
 
     // 减少
@@ -73,14 +70,13 @@ class Index extends Component {
 
     render() {
         let {num,data} = this.state
-        //console.log(this.props)
+
         return (
             <div>
-
                 <div className="shopdedatils">
-
-                        <img src={data.picurl} width="80%" alt={data.title}/>
-
+                        <LazyLoad height={200}>
+                            <img src={data.picurl} width="80%" alt={data.title}/>
+                        </LazyLoad>
                     <h3 className={'title'}>{data.title}</h3>
                     <h3 className={'des'}>{data.des}</h3>
                     <p className="money">

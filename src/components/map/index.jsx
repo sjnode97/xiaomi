@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
-// import {connect} from "react-redux";
-// import {getUserInfo} from "../../actions/cart";
+import {connect} from "react-redux";
+import {getUserInfo} from "../../actions/run";
 
 import "./css/index.scss";
 
-/*@connect(
+@connect(
     state=>({shop:state}),
     {getUserInfo}
-)*/
+)
 class Index extends Component {
- /*   componentDidMount() {
+    componentDidMount() {
         let {getUserInfo} = this.props
         // 百度地图API功能
         let {BMap,BMAP_STATUS_SUCCESS} = window
@@ -40,7 +40,7 @@ class Index extends Component {
             }
         },{enableHighAccuracy: true})
     }
-*/
+
     render() {
         return (
             <div className={'map'} id={'allmap'}>

@@ -1,0 +1,21 @@
+import shopTools from "../tos/shoptools"
+export default function (state={},action) {
+    let goods = action.data
+    let newS = Object.assign({},state)
+    switch (action.type) {
+        case "CART_ADD":
+            shopTools.addUpdate(goods)
+            return shopTools.getShop()
+        case "CART_DEL":
+            shopTools.delete(goods)
+            return shopTools.getShop()
+        case "CART_GOODS_NUM":
+            let newState = Object.assign({},newS,state,goods)
+            return newState
+        case "GRT_USER_INFO":
+            let newMapInfo = Object.assign({},newS,action.map)
+            return newMapInfo
+        default:
+            return shopTools.getShop()
+    }
+}
