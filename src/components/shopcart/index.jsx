@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 import "./css/index.scss";
-
-
 import {addCart,delCart,getGoodsNum} from "../../actions/run";
-
-
 import {connect} from "react-redux";
 
 
@@ -24,27 +20,35 @@ class Index extends Component {
             map: ''
         }
     }
+
     getData =()=>{
        let {cartCount} = this.props.shop
        let {goods} = this.state
        let shopid = Object.keys(cartCount)
+
         shopid.forEach((item,index)=>{
 
-            fetch('http://47.100.98.54:9020/api/buygoods/'+item)
-                .then((r)=>r.json())
-                .then((res)=>{
-                    // 挂载此商品对应的数量
-                    res['num'] = cartCount[item]
-                    goods.push(res)
-                    this.setState({
-                        goods
+            if( !isNaN(item) ){ // 必须判断是数字（商品id）
+                fetch('http://47.100.98.54:9020/api/buygoods/'+item)
+                    .then((r)=>r.json())
+                    .then((res)=>{
+                        // 挂载此商品对应的数量
+                        res['num'] = cartCount[item]
+                        goods.push(res)
+                        this.setState({
+                            goods
+                        })
+                        console.log(shopid);
                     })
-                    this.getResoult()
-                })
+            }
+
+
+
         })
+        this.getResoult()
     }
     reduceGoods =(index)=>{
-        console.log(this.state)
+
         let goods = this.state.goods
         let {addCart} = this.props
         let id = goods[index].shopid
@@ -85,7 +89,8 @@ class Index extends Component {
     }
     getResoult = () =>{
        let {cartCount} = this.props.shop
-       let timer = setTimeout(()=>{
+
+        let timer = setTimeout(()=>{
            clearTimeout(timer)
            this.zongjia()
        },200)
@@ -120,14 +125,14 @@ class Index extends Component {
     }
 
     render() {
-         let {goods,jiage,zongshu,adr} = this.state
-        // console.log( this.props )
+         let {goods,jiage,zongshu,adr,map} = this.state
+         console.log(this.state)
         return (
             <div className={'shopcart'}>
 
                 <div className="shopArea mb">
                     <p className="location clearFix">
-                        <span className="fl">送到地点:{adr&&adr}</span>
+                        <span className="fl">送到地点:{map&&map}</span>
                         <span className="fr">编辑地址</span>
                     </p>
                     {

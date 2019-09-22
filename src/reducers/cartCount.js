@@ -12,8 +12,9 @@ export default function (state={},action) {
         case "CART_GOODS_NUM":
             let newState = Object.assign({},newS,state,goods)
             return newState
-        case "GRT_USER_INFO":
+        case "GET_USER_INFO":
             let newMapInfo = Object.assign({},newS,action.map)
+            console.log(action);
             return newMapInfo
         default:
             return shopTools.getShop()

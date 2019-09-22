@@ -32,6 +32,7 @@ class Index extends Component {
                     let info = addComp.province + " " + addComp.city + " " + addComp.district + " " //+ addComp.street + " " + addComp.streetNumber
                     //console.log(addComp.province + " " + addComp.city + " " + addComp.district + " " + addComp.street + " " + addComp.streetNumber);
                     getUserInfo({map:info})
+                    //console.log(info);
                 });
 
             }
@@ -44,7 +45,7 @@ class Index extends Component {
     render() {
         return (
             <div className={'map'} id={'allmap'}>
-                    666
+
             </div>
         );
     }
